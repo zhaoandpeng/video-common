@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="VwVideoVerifyModel">
+    
+    <resultMap id="model" type="VwVideoVerifyModel">
+        <id property="verifyId" column="VERIFY_ID"/>
+        <result property="orderId" column="ORDER_ID"/>
+        <result property="witnessEmpId" column="WITNESS_EMP_ID"/>
+        <result property="startTime" column="START_TIME"/>
+        <result property="endTime" column="END_TIME"/>
+        <result property="videoLength" column="VIDEO_LENGTH"/>
+        <result property="videoAddress" column="VIDEO_ADDRESS"/>
+        <result property="status" column="STATUS"/>
+        <result property="resultComment" column="RESULT_COMMENT"/>
+        <result property="identityFront" column="IDENTITY_FRONT"/>
+        <result property="identityBack" column="IDENTITY_BACK"/>
+        <result property="frontalPhoto" column="FRONTAL_PHOTO"/>
+        <result property="orderPhoto" column="CONTRACT_PHOTO"/>
+        <result property="licensePhoto" column="LICENSE_PHOTO"/>
+        <result property="businessType" column="BUSINESS_TYPE"/>
+        <result property="videoType" column="VIDEO_TYPE"/>
+    </resultMap>
+
+	<sql id="property">
+  		<![CDATA[VERIFY_ID,ORDER_ID,WITNESS_EMP_ID,START_TIME,END_TIME,VIDEO_LENGTH,VIDEO_ADDRESS,STATUS,RESULT_COMMENT,IDENTITY_FRONT,IDENTITY_BACK,FRONTAL_PHOTO,CONTRACT_PHOTO,LICENSE_PHOTO,BUSINESS_TYPE,VIDEO_TYPE]]>
+  	</sql>
+
+	<sql id="queryProperty">
+		<if test="verifyId!=null">and VERIFY_ID=#{verifyId}</if>
+		<if test="orderId!=null">and ORDER_ID=#{orderId}</if>
+		<if test="witnessEmpId!=null">and WITNESS_EMP_ID=#{witnessEmpId}</if>
+		<if test="startTime!=null">and START_TIME=#{startTime}</if>
+		<if test="endTime!=null">and END_TIME=#{endTime}</if>
+		<if test="videoLength!=null">and VIDEO_LENGTH=#{videoLength}</if>
+		<if test="videoAddress!=null">and VIDEO_ADDRESS=#{videoAddress}</if>
+		<if test="status!=null">and STATUS=#{status}</if>
+		<if test="resultComment!=null">and RESULT_COMMENT=#{resultComment}</if>
+		<if test="identityFront!=null">and IDENTITY_FRONT=#{identityFront}</if>
+		<if test="identityBack!=null">and IDENTITY_BACK=#{identityBack}</if>
+		<if test="frontalPhoto!=null">and FRONTAL_PHOTO=#{frontalPhoto}</if>
+		<if test="orderPhoto!=null">and CONTRACT_PHOTO=#{orderPhoto}</if>
+		<if test="licensePhoto!=null">and LICENSE_PHOTO=#{licensePhoto}</if>
+		<if test="businessType!=null">and BUSINESS_TYPE=#{businessType}</if>
+		<if test="videoType!=null">and VIDEO_TYPE=#{videoType}</if>
+  	</sql>
+  	
+  	<sql id="updateProperty">
+  		<trim prefix="set" suffixOverrides=",">
+  		 	<if test="verifyId!=null">VERIFY_ID=#{verifyId},</if>
+			<if test="orderId!=null">ORDER_ID=#{orderId},</if>
+			<if test="witnessEmpId!=null">WITNESS_EMP_ID=#{witnessEmpId},</if>
+			<if test="startTime!=null">START_TIME=#{startTime},</if>
+			<if test="endTime!=null">END_TIME=#{endTime},</if>
+			<if test="videoLength!=null">VIDEO_LENGTH=#{videoLength},</if>
+			<if test="videoAddress!=null">VIDEO_ADDRESS=#{videoAddress},</if>
+			<if test="status!=null">STATUS=#{status},</if>
+			<if test="resultComment!=null">RESULT_COMMENT=#{resultComment},</if>
+			<if test="identityFront!=null">IDENTITY_FRONT=#{identityFront},</if>
+			<if test="identityBack!=null">IDENTITY_BACK=#{identityBack},</if>
+			<if test="frontalPhoto!=null">FRONTAL_PHOTO=#{frontalPhoto},</if>
+			<if test="orderPhoto!=null">CONTRACT_PHOTO=#{orderPhoto},</if>
+			<if test="licensePhoto!=null">LICENSE_PHOTO=#{licensePhoto},</if>
+			<if test="businessType!=null">BUSINESS_TYPE=#{businessType},</if>
+			<if test="videoType!=null">VIDEO_TYPE=#{videoType},</if>
+  		</trim>
+	</sql>
+
+	<select id="getObjectByBizId" resultMap="model" parameterType="Map">
+	    SELECT <include refid="property"/> FROM VW_VIDEO_VERIFY WHERE 1 = 1 <include refid="queryProperty"/>
+    </select>
+
+	<insert id="insert" parameterType="VwVideoVerifyModel">
+        <![CDATA[INSERT INTO VW_VIDEO_VERIFY (VERIFY_ID,ORDER_ID,WITNESS_EMP_ID,START_TIME,END_TIME,VIDEO_LENGTH,VIDEO_ADDRESS,STATUS,RESULT_COMMENT,IDENTITY_FRONT,IDENTITY_BACK,FRONTAL_PHOTO,CONTRACT_PHOTO,LICENSE_PHOTO,BUSINESS_TYPE,VIDEO_TYPE) VALUES
+        (#{verifyId},#{orderId,jdbcType=BIGINT},#{witnessEmpId,jdbcType=BIGINT},#{startTime,jdbcType=DATE},#{endTime,jdbcType=DATE},#{videoLength,jdbcType=INTEGER},#{videoAddress,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},#{resultComment,jdbcType=VARCHAR},
+         #{identityFront,jdbcType=VARCHAR},#{identityBack,jdbcType=VARCHAR},#{frontalPhoto,jdbcType=VARCHAR},#{orderPhoto,jdbcType=VARCHAR},#{licensePhoto,jdbcType=VARCHAR},#{businessType,jdbcType=VARCHAR},#{videoType,jdbcType=SMALLINT})]]>
+        <selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="verifyId">  
+       		SELECT VW_VIDEO_VERIFY_SEQ.Nextval from DUAL  
+   		</selectKey> 
+  	</insert>
+
+	<update id="updateByBusinessId" parameterType="VwVideoVerifyModel">
+		UPDATE VW_VIDEO_VERIFY <include refid="updateProperty"/><![CDATA[ WHERE ORDER_ID=#{orderId} AND BUSINESS_TYPE=#{businessType}]]>
+	</update>
+	
+    
+    
+</mapper>

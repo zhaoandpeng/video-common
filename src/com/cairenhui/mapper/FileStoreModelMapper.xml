@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="FileStoreModel">  
+    <resultMap id="model" type="FileStoreModel" >
+	    <id column="ID" property="id" jdbcType="DECIMAL" />
+	    <result column="BUSINESS_TYPE" property="businessType" jdbcType="VARCHAR" />
+	    <result column="BUSINESS_ID" property="businessId" jdbcType="VARCHAR" />
+	    <result column="ORIGINAL_FILE_NAME" property="originalFileName" jdbcType="VARCHAR" />
+	    <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+	    <result column="FILE_SUFFIX" property="fileSuffix" jdbcType="VARCHAR" />
+	    <result column="FILE_DESCRIBE" property="fileDescribe" jdbcType="VARCHAR" />
+	    <result column="FILE_TYPE" property="fileType" jdbcType="VARCHAR" />
+	    <result column="FILE_URL" property="fileUrl" jdbcType="VARCHAR" />
+	    <result column="UPLOAD_PERSON_NAME" property="uploadPersonName" jdbcType="VARCHAR" />
+	    <result column="UPLOAD_PERSON_ID" property="uploadPersonId" jdbcType="VARCHAR" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+  	</resultMap>
+  	
+  	<sql id="property">
+  		<![CDATA[ID,BUSINESS_TYPE,BUSINESS_ID,ORIGINAL_FILE_NAME,FILE_NAME,FILE_SUFFIX,FILE_DESCRIBE,FILE_TYPE,FILE_URL,UPLOAD_PERSON_NAME,UPLOAD_PERSON_ID,CREATE_TIME]]>
+  	</sql>
+  	
+  	<sql id="queryProperty">
+		<if test="id!=null">and ID=#{id}</if>
+		<if test="businessType!=null">and BUSINESS_TYPE=#{businessType}</if>
+		<if test="businessId!=null">and BUSINESS_ID=#{businessId}</if>
+		<if test="originalFileName!=null">and ORIGINAL_FILE_NAME=#{originalFileName}</if>
+		<if test="fileName!=null">and FILE_NAME=#{fileName}</if>
+		<if test="fileSuffix!=null">and FILE_SUFFIX=#{fileSuffix}</if>
+		<if test="fileDescribe!=null">and FILE_DESCRIBE=#{fileDescribe}</if>
+		<if test="fileType!=null">and FILE_TYPE=#{fileType}</if>
+		<if test="fileUrl!=null">and FILE_URL=#{fileUrl}</if>
+		<if test="uploadPersonName!=null">and UPLOAD_PERSON_NAME=#{uploadPersonName}</if>
+		<if test="uploadPersonId!=null">and UPLOAD_PERSON_ID=#{uploadPersonId}</if>
+		<if test="createTime!=null">and CREATE_TIME=#{createTime}</if>
+  	</sql>
+  	
+  	<sql id="updateProperty">
+  		<trim prefix="set" suffixOverrides=",">
+	  		<if test="id!=null">ID=#{id},</if>
+			<if test="businessType!=null">BUSINESS_TYPE=#{businessType},</if>
+			<if test="businessId!=null">BUSINESS_ID=#{businessId},</if>
+			<if test="originalFileName!=null">ORIGINAL_FILE_NAME=#{originalFileName},</if>
+			<if test="fileName!=null">FILE_NAME=#{fileName},</if>
+			<if test="fileSuffix!=null">FILE_SUFFIX=#{fileSuffix},</if>
+			<if test="fileDescribe!=null">FILE_DESCRIBE=#{fileDescribe},</if>
+			<if test="fileType!=null">FILE_TYPE=#{fileType},</if>
+			<if test="fileUrl!=null">FILE_URL=#{fileUrl},</if>
+			<if test="uploadPersonName!=null">UPLOAD_PERSON_NAME=#{uploadPersonName},</if>
+			<if test="uploadPersonId!=null">UPLOAD_PERSON_ID=#{uploadPersonId},</if>
+			<if test="createTime!=null">CREATE_TIME=#{createTime},</if>
+  		</trim>
+	</sql>
+  	
+  	<insert id="insert" parameterType="FileStoreModel">
+        <![CDATA[INSERT INTO FILE_STORE ( ID,BUSINESS_TYPE,BUSINESS_ID,ORIGINAL_FILE_NAME,FILE_NAME,FILE_SUFFIX,FILE_DESCRIBE,FILE_TYPE,FILE_URL,UPLOAD_PERSON_NAME,UPLOAD_PERSON_ID,CREATE_TIME) VALUES
+        (#{id},#{businessType,jdbcType=VARCHAR},#{businessId,jdbcType=VARCHAR},#{originalFileName,jdbcType=VARCHAR},#{fileName,jdbcType=VARCHAR},#{fileSuffix,jdbcType=VARCHAR},#{fileDescribe,jdbcType=VARCHAR},
+         #{fileType,jdbcType=VARCHAR},#{fileUrl,jdbcType=VARCHAR},#{uploadPersonName,jdbcType=VARCHAR},#{uploadPersonId,jdbcType=VARCHAR},#{createTime,jdbcType=DATE})]]>
+        <selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="id">  
+       		SELECT FILE_STORE_SEQ.Nextval from DUAL  
+   		</selectKey> 
+  	</insert>
+</mapper>

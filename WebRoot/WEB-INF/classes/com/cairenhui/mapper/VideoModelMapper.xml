@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="VideoModel">  
+    <resultMap id="model" type="VideoModel">
+	    <id column="ID" property="id"/>
+	    <result column="BUSINESS_TYPE" property="businessType" jdbcType="VARCHAR"/>
+	    <result column="BUSINESS_ID" property="businessId" jdbcType="VARCHAR"/>
+	    <result column="BUSINESS_VIDEO_TYPE" property="businessVideoType" jdbcType="VARCHAR"/>
+	    <result column="VIDEO_STATUS" property="videoStatus" jdbcType="VARCHAR"/>
+	    <result column="CREATE_TIME" property="createTime" jdbcType="DATE"/>
+	    <result column="END_TIME" property="endTime" jdbcType="DATE"/>
+	    <result column="OP_ID" property="opId" jdbcType="VARCHAR"/>
+  	</resultMap>
+  	
+  	<sql id="property">
+  		<![CDATA[ID,BUSINESS_TYPE,BUSINESS_ID,BUSINESS_VIDEO_TYPE,VIDEO_STATUS,CREATE_TIME,END_TIME,OP_ID]]>
+  	</sql>
+  	
+  	<sql id="queryProperty">
+		<if test="id!=null">and id=#{id}</if>
+		<if test="businessType!=null">and BUSINESS_TYPE=#{businessType}</if>
+		<if test="businessId!=null">and BUSINESS_ID=#{businessId}</if>
+		<if test="businessVideoType!=null">and BUSINESS_VIDEO_TYPE=#{businessVideoType}</if>
+		<if test="videoStatus!=null">and VIDEO_STATUS=#{videoStatus}</if>
+		<if test="createTime!=null">and CREATE_TIME=#{createTime}</if>
+		<if test="endTime!=null">and END_TIME=#{endTime}</if>
+		<if test="opId!=null">and OP_ID=#{opId}</if>
+  	</sql>
+  	
+  	<sql id="updateProperty">
+  		<trim prefix="set" suffixOverrides=",">
+	  		<if test="id!=null">id=#{id},</if>
+			<if test="businessType!=null">BUSINESS_TYPE=#{businessType},</if>
+			<if test="businessId!=null">BUSINESS_ID=#{businessId},</if>
+			<if test="businessVideoType!=null">BUSINESS_VIDEO_TYPE=#{businessVideoType},</if>
+			<if test="videoStatus!=null">VIDEO_STATUS=#{videoStatus},</if>
+			<if test="createTime!=null">CREATE_TIME=#{createTime},</if>
+			<if test="endTime!=null">END_TIME=#{endTime},</if>
+			<if test="opId!=null">OP_ID=#{opId},</if>
+  		</trim>
+	</sql>
+  	
+  	<select id="getObjectByBizId" resultMap="model" parameterType="Map">
+  		SELECT <include refid="property"/> FROM BUSINESS_VIDEO_ORDER WHERE 1 = 1 <include refid="queryProperty"/>
+  	</select>
+  	
+  	<insert id="insert" parameterType="VideoModel">
+        <![CDATA[INSERT INTO BUSINESS_VIDEO_ORDER ( ID,BUSINESS_TYPE,BUSINESS_ID,BUSINESS_VIDEO_TYPE,VIDEO_STATUS,CREATE_TIME,END_TIME) VALUES
+        (#{id},#{businessType,jdbcType=VARCHAR},#{businessId,jdbcType=VARCHAR},#{businessVideoType,jdbcType=VARCHAR},#{videoStatus,jdbcType=VARCHAR},#{createTime,jdbcType=DATE},#{endTime,jdbcType=DATE})]]>
+        <selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="id">  
+       		SELECT BUSINESS_VIDEO_ORDER_SEQ.Nextval from DUAL  
+   		</selectKey> 
+  	</insert>
+  	
+  	<update id="update" parameterType="VideoModel">
+  		 UPDATE BUSINESS_VIDEO_ORDER <include refid="updateProperty"/><![CDATA[ WHERE ID = #{id}]]>
+  	</update>
+  	
+</mapper>
