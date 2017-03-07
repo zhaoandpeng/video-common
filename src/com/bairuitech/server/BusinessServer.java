@@ -23,6 +23,7 @@ import com.cairenhui.model.FileStoreModel;
 import com.cairenhui.model.VideoModel;
 import com.cairenhui.service.VideoBusinessService;
 import com.cairenhui.service.VideoFileStoreService;
+import com.cairenhui.tools.DateUtils;
 import com.cairenhui.tools.VideoConstant;
 
 /**
@@ -232,12 +233,12 @@ public class BusinessServer implements AnyChatServerEvent{
 				videoModel.setBusinessType(bizType);
 				videoModel.setBusinessVideoType(businessVideoType);//视频类型【单双向】
 				videoModel.setVideoStatus("VALID");//视频可接通状态
-				videoModel.setCreateTime(new Date());
+				videoModel.setCreateTime(DateUtils.getNowDate());
 				int nextId = videoBusinessService.insert(videoModel);
 				System.out.println(">>>>>>>>>>>>>f返回主键为:"+nextId);
 			}else{
 				videoModel.setVideoStatus("VALID");//视频可接通状态
-				videoModel.setCreateTime(new Date());
+				videoModel.setCreateTime(DateUtils.getNowDate());
 				videoBusinessService.update(videoModel);
 			}
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+videoModel.toString());
@@ -284,7 +285,7 @@ public class BusinessServer implements AnyChatServerEvent{
 		VideoModel videoModel = videoBusinessService.getObjectByBizId(businessId, bizType);
 		if(null!=videoModel){
 			videoModel.setVideoStatus("INVALID");//视频可接通状态
-			videoModel.setEndTime(new Date());
+			videoModel.setEndTime(DateUtils.getNowDate());
 			videoBusinessService.update(videoModel);//修改视频可接通状态
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>房间数:"+roomListUser.size());
 		}
@@ -297,13 +298,13 @@ public class BusinessServer implements AnyChatServerEvent{
 		String[] split = szRecordFileName.replaceAll("\\\\","/").split("/"); 
 		if (split.length > 1&&szRecordFileName.indexOf(".mp4")!=-1) { 
 			model.setBusinessId(dwParam+"");
-			model.setCreateTime(new Date());
+			model.setCreateTime(DateUtils.getNowDate());
 			model.setFileType("INTERVIEW_VIDEO");
 			model.setFileUrl("/"+split[split.length - 2]+"/"+split[split.length - 1]);
 		}else if(split.length > 1&&szRecordFileName.indexOf(".jpg")!=-1){
 			String[] tempBizId = split[split.length - 1].split("-");
 			model.setBusinessId(tempBizId[tempBizId.length - 2]);
-			model.setCreateTime(new Date());
+			model.setCreateTime(DateUtils.getNowDate());
 			model.setFileType("INTERVIEW_PHOTO");
 			model.setFileUrl("/"+split[split.length - 2]+"/"+split[split.length - 1]);
 		}

@@ -1,5 +1,9 @@
 package com.cairenhui.tools;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import cn.org.rapid_framework.util.DateConvertUtils;
 
 
@@ -19,10 +23,19 @@ public class DateUtils {
     }*/  
 	
 	public static String date2String(java.util.Date date,String dateFormat) {
-		return DateConvertUtils.format(date,dateFormat);
+		   return DateConvertUtils.format(date,dateFormat);
 	}
 	
 	public static <T extends java.util.Date> T string2Date(String dateString,String dateFormat,Class<T> targetResultType) {
-		return DateConvertUtils.parse(dateString,dateFormat,targetResultType);
+		   return DateConvertUtils.parse(dateString,dateFormat,targetResultType);
+	}
+	
+	public static Date getNowDate() {
+		   Date currentTime = new Date();
+		   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		   String dateString = formatter.format(currentTime);
+		   ParsePosition pos = new ParsePosition(8);
+		   Date currentTime_2 = formatter.parse(dateString, pos);
+		   return currentTime_2;
 	}
 }
