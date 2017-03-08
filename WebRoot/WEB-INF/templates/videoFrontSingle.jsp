@@ -95,21 +95,13 @@ window.addEventListener('message', function(e){
 	<div class="video-top">
 		<div class="video-left">
 			<div class="ui-video-area">
-				<div id="AnyChatRemoteVideoDiv" class="photo-inner"
+				<div id="AnyChatLocalVideoDiv" class="photo-inner"
 					style="width: 360px; height: 270px; background-color: rgb(237, 237, 237)">
 				</div>
-				<p class="speed-content">
-					<span style="display: block">用户:<span id="user-net-video">0kb/s(视)</span><span
-						style="margin-right: 10px;" id="user-net-voice">0kb/s(音)</span></span> <span>客服:<span
-						id="emp-net-video">0kb/s(视)</span><span id="emp-net-voice">0kb/s(音)</span></span>
-				</p>
 			</div>
 
 			<div class="ui-video-opration">
 				<div class="opration-inner">
-					<div id="AnyChatLocalVideoDiv" class="video-photo"
-						style="width: 155px; height: 116px; background-color: rgb(237, 237, 237)">
-					</div>
 					<div class="video-btn-all">
 						<div class="audio-content">
 							<a href="javascript:void(0)" class="audio-play" id="playBtn"
